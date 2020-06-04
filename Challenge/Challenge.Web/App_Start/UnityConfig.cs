@@ -44,6 +44,7 @@ namespace Challenge.Web
 
             // TODO: Register your type's mappings here.
              container.RegisterType<IEquipmentService, EquipmentService>();
+             container.RegisterType<IUnitOfWork, UnitOfWork>();
         }
     }
 }

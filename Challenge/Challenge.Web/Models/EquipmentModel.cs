@@ -1,15 +1,20 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.Web;
 
 namespace Challenge.Web.Models
 {
     public class EquipmentModel
-    {
-        [Key]
+    {   
+        [Display(Name = "Serial Number")]
         public decimal SerialNumber { get; set; }
+        [Display(Name = "Name")]
         public string Name { get; set; }
-        public byte[] Picture { get; set; }
-        public DateTime? NextControlDate { get; set; }
+        [Display(Name = "Picture")]
+        public HttpPostedFileBase Picture { get; set; }
+        [Display(Name = "Controle Date")]
 
+        [UIHint("DateTimePicker")]
+        public DateTime? NextControlDate { get; set; }
     }
 }
