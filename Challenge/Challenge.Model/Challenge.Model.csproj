@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="Equipment.cs" />
     <Compile Include="ChallengeContext.cs" />
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Picture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

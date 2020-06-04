@@ -2,11 +2,6 @@
 using Challenge.Dal;
 using Challenge.Dal.Interfaces;
 using Challenge.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Challenge.Business
 {
