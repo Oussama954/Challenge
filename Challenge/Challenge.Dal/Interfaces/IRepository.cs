@@ -12,5 +12,6 @@ namespace Challenge.Dal.Interfaces
         IEnumerable<TEntity> GetAll();
         void Add(TEntity entity);
         void Remove(TEntity entity);
+        void Update(TEntity entity);
     }
 }
