@@ -19,9 +19,6 @@ namespace Challenge.Model
 
         public DateTime? NextControlDate { get; set; }
 
-        [Column(TypeName = "numeric")]
-        public decimal PictureId { get; set; }
-
         public virtual Picture Picture { get; set; }
     }
 }

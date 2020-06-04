@@ -22,13 +22,12 @@ namespace Challenge.Model
                 .HasPrecision(18, 0);
 
             modelBuilder.Entity<Equipment>()
-                .Property(e => e.PictureId)
-                .HasPrecision(18, 0);
+                .HasOptional(e => e.Picture)
+                .WithRequired(e => e.Equipment);
 
             modelBuilder.Entity<Picture>()
-                .Property(e => e.PictureId)
+                .Property(e => e.SerialNumber)
                 .HasPrecision(18, 0);
-
         }
     }
 }

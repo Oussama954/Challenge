@@ -9,13 +9,12 @@ namespace Challenge.Model
     [Table("Picture")]
     public partial class Picture
     {
-
-        [Column(TypeName = "numeric")]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public decimal PictureId { get; set; }
-
-        [Column("Picture")]
         public byte[] Content { get; set; }
 
+        [Key]
+        [Column(TypeName = "numeric")]
+        public decimal SerialNumber { get; set; }
+
+        public virtual Equipment Equipment { get; set; }
     }
 }
