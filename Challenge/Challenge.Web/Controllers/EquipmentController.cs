@@ -131,8 +131,21 @@ namespace Challenge.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                /* db.Entry(EquipmentModel).State = EntityState.Modified;
-                 db.SaveChanges();*/
+                var picture = new byte[0];
+                if (EquipmentModel.Picture != null)
+                {
+                    var target = new MemoryStream();
+                    EquipmentModel.Picture.InputStream.CopyTo(target);
+                    picture = target.ToArray();
+                }
+                var equipmentVO = new EquipmentVO
+                {
+                    Name = EquipmentModel.Name,
+                    NextControlDate = EquipmentModel.NextControlDate,
+                    Picture = picture,
+                    SerialNumber = EquipmentModel.SerialNumber
+                };
+                _equipmentService.Update(equipmentVO);
                 return RedirectToAction("Index");
             }
             return View(EquipmentModel);

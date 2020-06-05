@@ -17,7 +17,7 @@ namespace Challenge.Business
 
         public void Add(EquipmentVO equipmentVO)
         {
-            _unitOfWork.Equipments.Add(new Equipment 
+            _unitOfWork.Equipments.Add(new Equipment
             {
                 Name = equipmentVO.Name,
                 SerialNumber = equipmentVO.SerialNumber,
@@ -33,7 +33,7 @@ namespace Challenge.Business
 
         public EquipmentVO Find(int id)
         {
-            var equipment =_unitOfWork.Equipments.Get(id);
+            var equipment = _unitOfWork.Equipments.Get(id);
             return new EquipmentVO
             {
                 Name = equipment.Name,
@@ -46,6 +46,16 @@ namespace Challenge.Business
         public IEnumerable GetAll()
         {
             return _unitOfWork.Equipments.GetAll();
+        }
+
+        public void Update(EquipmentVO equipmentVO)
+        {
+            var equipment = _unitOfWork.Equipments.Get(equipmentVO.SerialNumber);
+            equipment.Name = equipmentVO.Name;
+            equipment.NextControlDate = equipmentVO.NextControlDate;
+            equipment.Picture.Content = equipmentVO.Picture;
+            _unitOfWork.Equipments.Update(equipment);
+            _unitOfWork.Complete();
         }
 
         IEnumerable<EquipmentVO> IEquipmentService.GetAll()
