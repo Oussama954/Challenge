@@ -2,6 +2,8 @@
 using Challenge.VO;
 using Challenge.Web.Models;
 using System;
+using System.Data.Entity.Infrastructure;
+using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -40,7 +42,7 @@ namespace Challenge.Web.Controllers
             {
                 Name = equipmentVO.Name,
                 NextControlDate = equipmentVO.NextControlDate,
-                Picture = null,
+                PictureUrl = string.Format("data:image/png;base64,{0}", Convert.ToBase64String(equipmentVO.Picture)),
                 SerialNumber = equipmentVO.SerialNumber
             };
             if (equipmentVO == null)
@@ -63,7 +65,6 @@ namespace Challenge.Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "SerialNumber,Name,Picture,NextControlDate")] EquipmentModel EquipmentModel)
         {
-           
             if (ModelState.IsValid)
             {
                 var target = new MemoryStream();
@@ -77,16 +78,26 @@ namespace Challenge.Web.Controllers
                     Picture = picture,
                     SerialNumber = EquipmentModel.SerialNumber
                 };
-                _equipmentService.Add(equipmentVO);
+                try
+                {
+                    _equipmentService.Add(equipmentVO);
+
+                }
+                catch (DbUpdateException e)
+                when
+                      (e.InnerException?.InnerException is SqlException sqlEx
+                      && (sqlEx.Number == 2601 || sqlEx.Number == 2627))
+                {
+                    return RedirectToAction("Unique");
+                }
 
                 return RedirectToAction("Index");
             }
-
             return View(EquipmentModel);
         }
 
         // GET: Equipment/Edit/5
-        public ActionResult Edit(decimal id)
+        public ActionResult Edit(int id)
         {
             if (id == null)
             {
@@ -124,7 +135,7 @@ namespace Challenge.Web.Controllers
         }
 
         // GET: Equipment/Delete/5
-        public ActionResult Delete(decimal id)
+        public ActionResult Delete(int id)
         {
             if (id == null)
             {
@@ -155,10 +166,12 @@ namespace Challenge.Web.Controllers
              db.SaveChanges();*/
             return RedirectToAction("Index");
         }
-
+        public ActionResult Unique()
+        {
+            return View();
+        }
         protected override void Dispose(bool disposing)
         {
-
             base.Dispose(disposing);
         }
     }
