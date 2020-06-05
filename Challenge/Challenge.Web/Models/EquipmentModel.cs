@@ -16,7 +16,10 @@ namespace Challenge.Web.Models
         [Display(Name = "Picture")]
         public HttpPostedFileBase Picture { get; set; }
         [Display(Name = "Controle Date")]
-        [CurrentDate(ErrorMessage = "Date must be after or equal to current date")]
+        [CurrentDate(ErrorMessage = "Date must be after current date")]
+        [DataType(DataType.Date),
+            DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}",
+            ApplyFormatInEditMode = true)]
         public DateTime? NextControlDate { get; set; }
         public string PictureUrl { get; set; }
     }

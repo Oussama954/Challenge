@@ -22,7 +22,6 @@
                 @Html.ValidationMessageFor(model => model.SerialNumber, "", new { @class = "text-danger" })
             </div>
         </div>
-
         <div class="form-group">
             @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -30,20 +29,18 @@
                 @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
             </div>
         </div>
-
+        <div class="form-group">
+            @Html.LabelFor(model => model.NextControlDate, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.NextControlDate, string.Empty, new { @id = "AcceptedDatepicker", htmlAttributes = new { @class = "form-control " } })
+                @Html.ValidationMessageFor(model => model.NextControlDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
         <div class="form-group">
             @Html.LabelFor(model => model.Picture, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.TextBoxFor(model => model.Picture, new { type = "file", htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Picture, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.NextControlDate, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(model => model.NextControlDate, string.Empty, new { @id = "AcceptedDatepicker",htmlAttributes = new { @class = "form-control " } })
-                @Html.ValidationMessageFor(model => model.NextControlDate, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -54,17 +51,6 @@
         </div>
     </div>
 }
-<script type="text/javascript">
-    $("#AcceptedDatepicker").datepicker({
-        dateFormat: 'D dd M yy',
-        minDate: 0,
-        highlightWeek: true,
-        showAnim: "scale",
-        showOptions: {
-            origin: ["top", "left"]
-        }
-    }).val('');
-</script>
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>

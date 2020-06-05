@@ -150,7 +150,7 @@ namespace Challenge.Web.Controllers
             {
                 Name = equipmentVO.Name,
                 NextControlDate = equipmentVO.NextControlDate,
-                Picture = null,
+                PictureUrl = string.Format("data:image/png;base64,{0}", Convert.ToBase64String(equipmentVO.Picture)),
                 SerialNumber = equipmentVO.SerialNumber
             };
             if (equipmentVO == null)
