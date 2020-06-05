@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Challenge.Web.Validation;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.Web;
 
@@ -15,7 +16,8 @@ namespace Challenge.Web.Models
         [Display(Name = "Picture")]
         public HttpPostedFileBase Picture { get; set; }
         [Display(Name = "Controle Date")]
+        [CurrentDate(ErrorMessage = "Date must be after or equal to current date")]
         public DateTime? NextControlDate { get; set; }
-        public string PictureUrl { get;  set; }
+        public string PictureUrl { get; set; }
     }
 }

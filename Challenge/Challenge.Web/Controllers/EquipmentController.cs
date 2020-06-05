@@ -67,9 +67,13 @@ namespace Challenge.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                var target = new MemoryStream();
-                EquipmentModel.Picture.InputStream.CopyTo(target);
-                byte[] picture = target.ToArray();
+                var picture = new byte[0];
+                if(EquipmentModel.Picture != null)
+                {
+                    var target = new MemoryStream();
+                    EquipmentModel.Picture.InputStream.CopyTo(target);
+                    picture = target.ToArray();
+                }
 
                 var equipmentVO = new EquipmentVO
                 {

@@ -12,7 +12,6 @@ namespace Challenge.Model
         public byte[] Content { get; set; }
 
         [Key]
-        [Column(TypeName = "numeric")]
         public int SerialNumber { get; set; }
 
         public virtual Equipment Equipment { get; set; }
