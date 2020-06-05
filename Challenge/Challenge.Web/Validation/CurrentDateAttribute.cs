@@ -11,7 +11,7 @@ namespace Challenge.Web.Validation
 
         public override bool IsValid(object value)
         {
-            if (value == null) return false;
+            if (value == null) return true;
             var dt = (DateTime)value;
             if (dt >= DateTime.Now)
             {

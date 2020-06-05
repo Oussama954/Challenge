@@ -178,9 +178,8 @@ namespace Challenge.Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            /* EquipmentModel EquipmentModel = db.EquipmentModels.Find(id);
-             db.EquipmentModels.Remove(EquipmentModel);
-             db.SaveChanges();*/
+            var equipmentVO = _equipmentService.Find(id);
+            _equipmentService.Delete(equipmentVO);
             return RedirectToAction("Index");
         }
         public ActionResult Unique()

@@ -10,5 +10,6 @@ namespace Challenge.Business.Interfaces
         EquipmentVO Find(int id);
         void Add(EquipmentVO equipmentVO);
         void Update(EquipmentVO equipmentVO);
+        void Delete(EquipmentVO equipmentVO);
     }
 }

@@ -31,6 +31,16 @@ namespace Challenge.Business
             _unitOfWork.Complete();
         }
 
+        public void Delete(EquipmentVO equipmentVO)
+        {
+            var serialNumber = equipmentVO.SerialNumber;
+            var equipment = _unitOfWork.Equipments.Get(serialNumber);
+            var picture = _unitOfWork.Pictures.Get(serialNumber);
+            _unitOfWork.Equipments.Remove(equipment);
+            _unitOfWork.Pictures.Remove(picture);
+            _unitOfWork.Complete();
+        }
+
         public EquipmentVO Find(int id)
         {
             var equipment = _unitOfWork.Equipments.Get(id);
