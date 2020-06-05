@@ -18,21 +18,21 @@
         <div class="form-group">
             @Html.LabelFor(model => model.SerialNumber, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.TextBoxFor(model => model.SerialNumber, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.SerialNumber, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.SerialNumber, "", new { @class = "text-danger" })
             </div>
         </div>
         <div class="form-group">
             @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.TextBoxFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
             </div>
         </div>
         <div class="form-group">
             @Html.LabelFor(model => model.NextControlDate, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.TextBoxFor(model => model.NextControlDate, string.Empty, new { @id = "AcceptedDatepicker", htmlAttributes = new { @class = "form-control " } })
+                @Html.EditorFor(model => model.NextControlDate, string.Empty, new {htmlAttributes = new { @class = "form-control " } })
                 @Html.ValidationMessageFor(model => model.NextControlDate, "", new { @class = "text-danger" })
             </div>
         </div>
