@@ -31,7 +31,7 @@ namespace Challenge.Web.Controllers
         }
 
         // GET: Equipment/Details/5
-        public ActionResult Details(decimal id)
+        public ActionResult Details(int id)
         {
             if (id == null)
             {
@@ -159,7 +159,7 @@ namespace Challenge.Web.Controllers
         // POST: Equipment/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(decimal id)
+        public ActionResult DeleteConfirmed(int id)
         {
             /* EquipmentModel EquipmentModel = db.EquipmentModels.Find(id);
              db.EquipmentModels.Remove(EquipmentModel);

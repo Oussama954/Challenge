@@ -13,7 +13,7 @@ namespace Challenge.Model
 
         [Key]
         [Column(TypeName = "numeric")]
-        public decimal SerialNumber { get; set; }
+        public int SerialNumber { get; set; }
 
         public virtual Equipment Equipment { get; set; }
     }

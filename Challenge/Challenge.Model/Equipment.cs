@@ -11,7 +11,7 @@ namespace Challenge.Model
     {
         [Key]
         [Column(TypeName = "numeric")]
-        public decimal SerialNumber { get; set; }
+        public int SerialNumber { get; set; }
 
         [Required]
         [StringLength(50)]

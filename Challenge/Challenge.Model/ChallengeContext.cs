@@ -20,16 +20,14 @@ namespace Challenge.Model
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Equipment>()
-                .Property(e => e.SerialNumber)
-                .HasPrecision(18, 0);
-
+                .Property(e => e.SerialNumber);
+ 
             modelBuilder.Entity<Equipment>()
                 .HasOptional(e => e.Picture)
                 .WithRequired(e => e.Equipment);
 
             modelBuilder.Entity<Picture>()
-                .Property(e => e.SerialNumber)
-                .HasPrecision(18, 0);
-        }
+                .Property(e => e.SerialNumber);
+         }
     }
 }

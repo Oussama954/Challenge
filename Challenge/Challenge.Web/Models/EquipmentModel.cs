@@ -8,7 +8,7 @@ namespace Challenge.Web.Models
     {
         [Required]
         [Display(Name = "Serial Number")]
-        public decimal SerialNumber { get; set; }
+        public int SerialNumber { get; set; }
         [Required]
         [Display(Name = "Name")]
         public string Name { get; set; }

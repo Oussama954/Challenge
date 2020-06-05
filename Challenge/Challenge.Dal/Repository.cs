@@ -20,7 +20,7 @@ namespace Challenge.Dal
             Context.Set<TEntity>().Add(entity);
         }
 
-        public TEntity Get(decimal id)
+        public TEntity Get(int id)
         {
             return Context.Set<TEntity>().Find(id);
         }

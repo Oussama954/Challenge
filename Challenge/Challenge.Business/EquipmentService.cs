@@ -31,7 +31,7 @@ namespace Challenge.Business
             _unitOfWork.Complete();
         }
 
-        public EquipmentVO Find(decimal id)
+        public EquipmentVO Find(int id)
         {
             var equipment =_unitOfWork.Equipments.Get(id);
             return new EquipmentVO

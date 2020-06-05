@@ -7,7 +7,7 @@ namespace Challenge.Business.Interfaces
     public interface IEquipmentService
     {
         IEnumerable<EquipmentVO> GetAll();
-        EquipmentVO Find(decimal id);
+        EquipmentVO Find(int id);
         void Add(EquipmentVO equipmentVO);
     }
 }
