@@ -1,4 +1,5 @@
 ﻿using Challenge.Business.Interfaces;
+using Challenge.Model;
 using Challenge.VO;
 using System.Collections;
 using System.Collections.Generic;
@@ -12,6 +13,22 @@ namespace Challenge.Business
         public EquipmentService(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
+        }
+
+        public void Add(EquipmentVO equipmentVO)
+        {
+            _unitOfWork.Equipments.Add(new Equipment 
+            {
+                Name = equipmentVO.Name,
+                SerialNumber = equipmentVO.SerialNumber,
+                NextControlDate = equipmentVO.NextControlDate
+            });
+            _unitOfWork.Pictures.Add(new Picture
+            {
+                SerialNumber = equipmentVO.SerialNumber,
+                Content = equipmentVO.Picture
+            });
+            _unitOfWork.Complete();
         }
 
         public EquipmentVO Find(decimal id)

@@ -18,10 +18,10 @@
             @Html.DisplayNameFor(model => model.Name)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Picture)
+            @Html.DisplayNameFor(model => model.NextControlDate)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.NextControlDate)
+            @Html.DisplayNameFor(model => model.Picture)
         </th>
         <th></th>
     </tr>
@@ -35,10 +35,10 @@
         @Html.DisplayFor(modelItem => item.Name)
     </td>
     <td>
-        @Html.DisplayFor(modelItem => item.Picture)
+        @Html.DisplayFor(modelItem => item.NextControlDate)
     </td>
     <td>
-        @Html.DisplayFor(modelItem => item.NextControlDate)
+        <img src="@Html.DisplayFor(modelItem => item.PictureUrl)" width="96" height="65">
     </td>
     <td>
         @Html.ActionLink("Edit", "Edit", new { id = item.SerialNumber }) |

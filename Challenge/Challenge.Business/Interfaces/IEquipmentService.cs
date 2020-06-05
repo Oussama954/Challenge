@@ -8,5 +8,6 @@ namespace Challenge.Business.Interfaces
     {
         IEnumerable<EquipmentVO> GetAll();
         EquipmentVO Find(decimal id);
+        void Add(EquipmentVO equipmentVO);
     }
 }

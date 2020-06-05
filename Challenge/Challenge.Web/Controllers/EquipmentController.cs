@@ -1,5 +1,8 @@
 ﻿using Challenge.Business.Interfaces;
+using Challenge.VO;
 using Challenge.Web.Models;
+using System;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
@@ -21,7 +24,7 @@ namespace Challenge.Web.Controllers
                 Name = e.Name,
                 NextControlDate = e.NextControlDate,
                 SerialNumber = e.SerialNumber,
-                Picture = null
+                PictureUrl = string.Format("data:image/png;base64,{0}", Convert.ToBase64String(e.Picture))
             })) ;
         }
 
@@ -60,10 +63,22 @@ namespace Challenge.Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "SerialNumber,Name,Picture,NextControlDate")] EquipmentModel EquipmentModel)
         {
+           
             if (ModelState.IsValid)
             {
-                /*   db.EquipmentModels.Add(EquipmentModel);
-                   db.SaveChanges();*/
+                var target = new MemoryStream();
+                EquipmentModel.Picture.InputStream.CopyTo(target);
+                byte[] picture = target.ToArray();
+
+                var equipmentVO = new EquipmentVO
+                {
+                    Name = EquipmentModel.Name,
+                    NextControlDate = EquipmentModel.NextControlDate,
+                    Picture = picture,
+                    SerialNumber = EquipmentModel.SerialNumber
+                };
+                _equipmentService.Add(equipmentVO);
+
                 return RedirectToAction("Index");
             }
 

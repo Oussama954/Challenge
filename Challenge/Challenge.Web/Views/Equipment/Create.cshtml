@@ -7,10 +7,10 @@
 <h2>Create</h2>
 
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm("Create", "Equipment", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>EquipmentModel</h4>
         <hr />
@@ -34,7 +34,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Picture, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Picture, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.TextBoxFor(model => model.Picture, new { type = "file", htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Picture, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -42,7 +42,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.NextControlDate, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.NextControlDate, new { htmlAttributes = new { @class = "form-control datetimepicker" } })
+                @Html.TextBoxFor(model => model.NextControlDate, string.Empty, new { @id = "AcceptedDatepicker",htmlAttributes = new { @class = "form-control " } })
                 @Html.ValidationMessageFor(model => model.NextControlDate, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -55,9 +55,15 @@
     </div>
 }
 <script type="text/javascript">
-    $(function () {
-        $('.datetimepicker').datepicker();
-    });
+    $("#AcceptedDatepicker").datepicker({
+        dateFormat: 'D dd M yy',
+        minDate: 0,
+        highlightWeek: true,
+        showAnim: "scale",
+        showOptions: {
+            origin: ["top", "left"]
+        }
+    }).val('');
 </script>
 <div>
     @Html.ActionLink("Back to List", "Index")

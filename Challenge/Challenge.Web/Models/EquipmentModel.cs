@@ -16,5 +16,6 @@ namespace Challenge.Web.Models
 
         [UIHint("DateTimePicker")]
         public DateTime? NextControlDate { get; set; }
+        public string PictureUrl { get;  set; }
     }
 }
