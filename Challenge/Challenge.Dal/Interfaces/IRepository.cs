@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -13,5 +14,7 @@ namespace Challenge.Dal.Interfaces
         void Add(TEntity entity);
         void Remove(TEntity entity);
         void Update(TEntity entity);
+        IEnumerable<TEntity> OrderBy(Expression<Func<TEntity, int>> predicate, int page, int pageSize);
+        IEnumerable<TEntity> OrderByDescending(Expression<Func<TEntity, int>> predicate, int page, int pageSize);
     }
 }

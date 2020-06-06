@@ -11,7 +11,7 @@ namespace Challenge.Model
             : base("name=ChallengeModel")
         {
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<ChallengeContext, Challenge.Model.Migrations.Configuration>());
-
+            Database.Log = s => System.Diagnostics.Debug.WriteLine(s);
         }
 
         public virtual DbSet<Equipment> Equipment { get; set; }

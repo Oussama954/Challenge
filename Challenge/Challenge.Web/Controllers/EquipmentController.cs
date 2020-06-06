@@ -19,15 +19,44 @@ namespace Challenge.Web.Controllers
             _equipmentService = equipmentService;
         }
         // GET: Equipment
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder, int? page, string searchString,string currentFilter) 
         {
-            return View(_equipmentService.GetAll().Select(e => new EquipmentModel
+            var pager = new Pager(10, page);
+            int pageSize = (pager.CurrentPage - 1) * pager.PageSize;
+            int pageNumber = pager.PageSize;
+
+            var equipmentList = _equipmentService.OrderBySerialNumber(pageSize, pageNumber);
+            if (searchString == null)
             {
-                Name = e.Name,
-                NextControlDate = e.NextControlDate,
-                SerialNumber = e.SerialNumber,
-                PictureUrl = string.Format("data:image/png;base64,{0}", Convert.ToBase64String(e.Picture))
-            })) ;
+                searchString = currentFilter;
+            }
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                equipmentList = _equipmentService.FindName(searchString,pageSize, pageNumber);
+            }
+            ViewBag.CurrentFilter = searchString;
+
+            ViewBag.CurrentSort = sortOrder;
+            ViewBag.SerialNumberSortParm = string.IsNullOrEmpty(sortOrder) ? "serial_desc" : "";
+            switch (sortOrder)
+            {
+                case "serial_desc":
+                    equipmentList = _equipmentService.OrderByDescendingSerialNumber(pageSize, pageNumber) ;
+                    break;
+            }
+            var viewModel = new IndexViewModel
+            {
+                Items = equipmentList.Select(e => new EquipmentModel
+                {
+                    Name = e.Name,
+                    NextControlDate = e.NextControlDate,
+                    SerialNumber = e.SerialNumber,
+                    PictureUrl = string.Format("data:image/png;base64,{0}", Convert.ToBase64String(e.Picture))
+                }),
+                Pager = pager
+            };
+
+            return View(viewModel);
         }
 
         // GET: Equipment/Details/5

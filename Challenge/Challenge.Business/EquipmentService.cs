@@ -1,9 +1,11 @@
 ﻿using Challenge.Business.Interfaces;
 using Challenge.Model;
 using Challenge.VO;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 
 namespace Challenge.Business
 {
@@ -52,12 +54,6 @@ namespace Challenge.Business
                 Picture = equipment.Picture.Content
             };
         }
-
-        public IEnumerable GetAll()
-        {
-            return _unitOfWork.Equipments.GetAll();
-        }
-
         public void Update(EquipmentVO equipmentVO)
         {
             var equipment = _unitOfWork.Equipments.Get(equipmentVO.SerialNumber);
@@ -68,9 +64,40 @@ namespace Challenge.Business
             _unitOfWork.Complete();
         }
 
-        IEnumerable<EquipmentVO> IEquipmentService.GetAll()
+        public IEnumerable<EquipmentVO> GetAll()
         {
             return _unitOfWork.Equipments.GetAll().Select(e => new EquipmentVO
+            {
+                Name = e.Name,
+                SerialNumber = e.SerialNumber,
+                NextControlDate = e.NextControlDate,
+                Picture = e.Picture.Content
+            });
+        }
+        public IEnumerable<EquipmentVO> OrderBySerialNumber(int page, int pageSize)
+        {
+            return _unitOfWork.Equipments.OrderBy(e => e.SerialNumber, page, pageSize).Select(e => new EquipmentVO
+            {
+                Name = e.Name,
+                SerialNumber = e.SerialNumber,
+                NextControlDate = e.NextControlDate,
+                Picture = e.Picture.Content
+            });
+        }
+        public IEnumerable<EquipmentVO> OrderByDescendingSerialNumber(int page, int pageSize)
+        {
+            return _unitOfWork.Equipments.OrderByDescending(e => e.SerialNumber, page, pageSize).Select(e => new EquipmentVO
+            {
+                Name = e.Name,
+                SerialNumber = e.SerialNumber,
+                NextControlDate = e.NextControlDate,
+                Picture = e.Picture.Content
+            });
+        }
+
+        public IEnumerable<EquipmentVO> FindName(string name, int page, int pageSize)
+        {
+            return _unitOfWork.Equipments.FindByName(name, page, pageSize).Select(e => new EquipmentVO
             {
                 Name = e.Name,
                 SerialNumber = e.SerialNumber,
