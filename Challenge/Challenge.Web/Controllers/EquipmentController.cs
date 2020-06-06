@@ -21,7 +21,7 @@ namespace Challenge.Web.Controllers
         // GET: Equipment
         public ActionResult Index(string sortOrder, int? page, string searchString,string currentFilter) 
         {
-            var pager = new Pager(10, page);
+            var pager = new Pager(_equipmentService.Count(), page);
             int pageSize = (pager.CurrentPage - 1) * pager.PageSize;
             int pageNumber = pager.PageSize;
 
@@ -38,10 +38,25 @@ namespace Challenge.Web.Controllers
 
             ViewBag.CurrentSort = sortOrder;
             ViewBag.SerialNumberSortParm = string.IsNullOrEmpty(sortOrder) ? "serial_desc" : "";
+            ViewBag.NameSortParm = sortOrder == "Name" ? "name_desc" : "Name";
+            ViewBag.NextControlDateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
+
             switch (sortOrder)
             {
                 case "serial_desc":
-                    equipmentList = _equipmentService.OrderByDescendingSerialNumber(pageSize, pageNumber) ;
+                    equipmentList = _equipmentService.OrderByDescendingSerialNumber(pageSize, pageNumber);
+                    break;
+                case "Name":
+                    equipmentList = _equipmentService.OrderByName(pageSize, pageNumber);
+                    break;
+                case "name_desc":
+                    equipmentList = _equipmentService.OrderByDescendingName(pageSize, pageNumber);
+                    break;
+                case "Date":
+                    equipmentList = _equipmentService.OrderByDate(pageSize, pageNumber);
+                    break;
+                case "date_desc":
+                    equipmentList = _equipmentService.OrderByDescendingDate(pageSize, pageNumber);
                     break;
             }
             var viewModel = new IndexViewModel

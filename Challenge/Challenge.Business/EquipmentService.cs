@@ -2,10 +2,8 @@
 using Challenge.Model;
 using Challenge.VO;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 
 namespace Challenge.Business
 {
@@ -16,7 +14,10 @@ namespace Challenge.Business
         {
             _unitOfWork = unitOfWork;
         }
-
+        public int Count()
+        {
+            return _unitOfWork.Equipments.Count();
+        }
         public void Add(EquipmentVO equipmentVO)
         {
             _unitOfWork.Equipments.Add(new Equipment
@@ -98,6 +99,50 @@ namespace Challenge.Business
         public IEnumerable<EquipmentVO> FindName(string name, int page, int pageSize)
         {
             return _unitOfWork.Equipments.FindByName(name, page, pageSize).Select(e => new EquipmentVO
+            {
+                Name = e.Name,
+                SerialNumber = e.SerialNumber,
+                NextControlDate = e.NextControlDate,
+                Picture = e.Picture.Content
+            });
+        }
+
+        public IEnumerable<EquipmentVO> OrderByName(int pageSize, int pageNumber)
+        {
+            return _unitOfWork.Equipments.OrderBy(e => e.Name, pageSize, pageNumber).Select(e => new EquipmentVO
+            {
+                Name = e.Name,
+                SerialNumber = e.SerialNumber,
+                NextControlDate = e.NextControlDate,
+                Picture = e.Picture.Content
+            });
+        }
+
+        public IEnumerable<EquipmentVO> OrderByDescendingName(int pageSize, int pageNumber)
+        {
+            return _unitOfWork.Equipments.OrderByDescending(e => e.Name, pageSize, pageNumber).Select(e => new EquipmentVO
+            {
+                Name = e.Name,
+                SerialNumber = e.SerialNumber,
+                NextControlDate = e.NextControlDate,
+                Picture = e.Picture.Content
+            });
+        }
+
+        public IEnumerable<EquipmentVO> OrderByDate(int pageSize, int pageNumber)
+        {
+            return _unitOfWork.Equipments.OrderBy(e => e.NextControlDate, pageSize, pageNumber).Select(e => new EquipmentVO
+            {
+                Name = e.Name,
+                SerialNumber = e.SerialNumber,
+                NextControlDate = e.NextControlDate,
+                Picture = e.Picture.Content
+            });
+        }
+
+        public IEnumerable<EquipmentVO> OrderByDescendingDate(int pageSize, int pageNumber)
+        {
+            return _unitOfWork.Equipments.OrderByDescending(e => e.NextControlDate, pageSize, pageNumber).Select(e => new EquipmentVO
             {
                 Name = e.Name,
                 SerialNumber = e.SerialNumber,

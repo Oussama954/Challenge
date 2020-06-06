@@ -16,6 +16,10 @@ namespace Challenge.Dal
         {
             Context = context;
         }
+        public int Count()
+        {
+            return Context.Set<TEntity>().Count();
+        }
         public void Add(TEntity entity)
         {
             Context.Set<TEntity>().Add(entity);
@@ -45,6 +49,22 @@ namespace Challenge.Dal
             return Context.Set<TEntity>().OrderBy(predicate).Skip(page).Take(pageSize).ToList();
         }
         public IEnumerable<TEntity> OrderByDescending(Expression<Func<TEntity, int>> predicate, int page, int pageSize)
+        {
+            return Context.Set<TEntity>().OrderByDescending(predicate).Skip(page).Take(pageSize).ToList();
+        }
+        public IEnumerable<TEntity> OrderBy(Expression<Func<TEntity, string>> predicate, int page, int pageSize)
+        {
+            return Context.Set<TEntity>().OrderBy(predicate).Skip(page).Take(pageSize).ToList();
+        }
+        public IEnumerable<TEntity> OrderByDescending(Expression<Func<TEntity, string>> predicate, int page, int pageSize)
+        {
+            return Context.Set<TEntity>().OrderByDescending(predicate).Skip(page).Take(pageSize).ToList();
+        }
+        public IEnumerable<TEntity> OrderBy(Expression<Func<TEntity, DateTime?>> predicate, int page, int pageSize)
+        {
+            return Context.Set<TEntity>().OrderBy(predicate).Skip(page).Take(pageSize).ToList();
+        }
+        public IEnumerable<TEntity> OrderByDescending(Expression<Func<TEntity, DateTime?>> predicate, int page, int pageSize)
         {
             return Context.Set<TEntity>().OrderByDescending(predicate).Skip(page).Take(pageSize).ToList();
         }

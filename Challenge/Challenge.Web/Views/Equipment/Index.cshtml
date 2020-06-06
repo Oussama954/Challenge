@@ -12,10 +12,10 @@
 
 @using (Html.BeginForm("Index", "Equipment", FormMethod.Get))
 {
-<p>
-    Find by name:  @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
-    <input type="submit" value="Search" class="btn btn-default" />
-</p>
+    <p>
+        Find by name:  @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+        <input type="submit" value="Search" class="btn btn-default" />
+    </p>
 }
 <table class="table">
     <tr>
@@ -23,10 +23,10 @@
             @Html.ActionLink("Serial Number", "Index", new { sortOrder = ViewBag.SerialNumberSortParm, currentFilter = ViewBag.CurrentFilter })
         </th>
         <th>
-            @Html.ActionLink("Name", "Index", new { sortOrder = ViewBag.NameSortParm })
+            @Html.ActionLink("Name", "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })
         </th>
         <th>
-            @Html.ActionLink("Next Control Date", "Index", new { sortOrder = ViewBag.NextControlDateSortParm })
+            @Html.ActionLink("Next Control Date", "Index", new { sortOrder = ViewBag.NextControlDateSortParm, currentFilter = ViewBag.CurrentFilter })
         </th>
         <th>
             Picture
@@ -68,7 +68,7 @@
                 <a href="~/Equipment/Index">First</a>
             </li>
             <li>
-                <a href="~/Equipment/Index?page=@(Model.Pager.CurrentPage - 1)">Previous</a>
+                <a href="~/Equipment/Index?page=@(Model.Pager.CurrentPage - 1)&SearchString=@ViewBag.CurrentFilter&sortOrder=@ViewBag.CurrentSort ">Previous</a>
             </li>
         }
 
@@ -82,10 +82,10 @@
         @if (Model.Pager.CurrentPage < Model.Pager.TotalPages)
         {
             <li>
-                <a href="~/Equipment/Index?page=@(Model.Pager.CurrentPage + 1)">Next</a>
+                <a href="~/Equipment/Index?page=@(Model.Pager.CurrentPage + 1)&SearchString=@ViewBag.CurrentFilter&sortOrder=@ViewBag.CurrentSort ">Next</a>
             </li>
             <li>
-                <a href="~/Equipment/Index?page=@(Model.Pager.TotalPages)">Last</a>
+                <a href="~/Equipment/Index?page=@(Model.Pager.TotalPages)&SearchString=@ViewBag.CurrentFilter&sortOrder=@ViewBag.CurrentSort ">Last</a>
             </li>
         }
     </ul>
