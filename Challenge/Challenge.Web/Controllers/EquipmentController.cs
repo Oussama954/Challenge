@@ -25,22 +25,23 @@ namespace Challenge.Web.Controllers
             int pageSize = (pager.CurrentPage - 1) * pager.PageSize;
             int pageNumber = pager.PageSize;
 
+            ViewBag.CurrentFilter = searchString;
+            ViewBag.CurrentSort = sortOrder;
+            ViewBag.SerialNumberSortParm = string.IsNullOrEmpty(sortOrder) ? "serial_desc" : "";
+            ViewBag.NameSortParm = sortOrder == "Name" ? "name_desc" : "Name";
+            ViewBag.NextControlDateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
+
             var equipmentList = _equipmentService.OrderBySerialNumber(pageSize, pageNumber);
+
             if (searchString == null)
             {
                 searchString = currentFilter;
             }
             if (!string.IsNullOrEmpty(searchString))
             {
-                equipmentList = _equipmentService.FindName(searchString,pageSize, pageNumber);
+                pager = new Pager(_equipmentService.CountByName(searchString), page);
+                equipmentList = _equipmentService.FindName(searchString, (pager.CurrentPage - 1) * pager.PageSize,  pager.PageSize);
             }
-            ViewBag.CurrentFilter = searchString;
-
-            ViewBag.CurrentSort = sortOrder;
-            ViewBag.SerialNumberSortParm = string.IsNullOrEmpty(sortOrder) ? "serial_desc" : "";
-            ViewBag.NameSortParm = sortOrder == "Name" ? "name_desc" : "Name";
-            ViewBag.NextControlDateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
-
             switch (sortOrder)
             {
                 case "serial_desc":

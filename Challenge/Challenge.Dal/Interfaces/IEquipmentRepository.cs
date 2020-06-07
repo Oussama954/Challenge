@@ -11,5 +11,6 @@ namespace Challenge.Dal.Interfaces
     public interface IEquipmentRepository : IRepository<Equipment>
     {
         IEnumerable<Equipment> FindByName(string name, int page, int pageSize);
+        int CountByName(string name);
     }
 }

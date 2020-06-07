@@ -4,32 +4,31 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
-
+<h2>@Resources.Equipment.EquipmentList</h2>
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink(@Resources.Equipment.CreateNew, "Create")
 </p>
 
 @using (Html.BeginForm("Index", "Equipment", FormMethod.Get))
 {
     <p>
-        Find by name:  @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
-        <input type="submit" value="Search" class="btn btn-default" />
+        @Resources.Equipment.FindByName :  @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+        <input type="submit" value=@Resources.Equipment.Search class="btn btn-default" />
     </p>
 }
 <table class="table">
     <tr>
         <th>
-            @Html.ActionLink("Serial Number", "Index", new { sortOrder = ViewBag.SerialNumberSortParm, currentFilter = ViewBag.CurrentFilter })
+            @Html.ActionLink(@Resources.Equipment.SerialNumber, "Index", new { sortOrder = ViewBag.SerialNumberSortParm, currentFilter = ViewBag.CurrentFilter })
         </th>
         <th>
-            @Html.ActionLink("Name", "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })
+            @Html.ActionLink(@Resources.Equipment.Name, "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })
         </th>
         <th>
-            @Html.ActionLink("Next Control Date", "Index", new { sortOrder = ViewBag.NextControlDateSortParm, currentFilter = ViewBag.CurrentFilter })
+            @Html.ActionLink(@Resources.Equipment.ControleDate, "Index", new { sortOrder = ViewBag.NextControlDateSortParm, currentFilter = ViewBag.CurrentFilter })
         </th>
         <th>
-            Picture
+            @Resources.Equipment.Picture
         </th>
         <th></th>
     </tr>
@@ -50,9 +49,9 @@
                 <img src="@Html.DisplayFor(modelItem => item.PictureUrl)" width="96" height="65">
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.SerialNumber }) |
-                @Html.ActionLink("Details", "Details", new { id = item.SerialNumber }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.SerialNumber })
+                @Html.ActionLink(@Resources.Equipment.Edit, "Edit", new { id = item.SerialNumber }) |
+                @Html.ActionLink(@Resources.Equipment.Details, "Details", new { id = item.SerialNumber }) |
+                @Html.ActionLink(@Resources.Equipment.Delete, "Delete", new { id = item.SerialNumber })
             </td>
         </tr>
     }
@@ -65,10 +64,10 @@
         @if (Model.Pager.CurrentPage > 1)
         {
             <li>
-                <a href="~/Equipment/Index">First</a>
+                <a href="~/Equipment/Index?SearchString=@ViewBag.CurrentFilter&sortOrder=@ViewBag.CurrentSort">@Resources.Equipment.First</a>
             </li>
             <li>
-                <a href="~/Equipment/Index?page=@(Model.Pager.CurrentPage - 1)&SearchString=@ViewBag.CurrentFilter&sortOrder=@ViewBag.CurrentSort ">Previous</a>
+                <a href="~/Equipment/Index?page=@(Model.Pager.CurrentPage - 1)&SearchString=@ViewBag.CurrentFilter&sortOrder=@ViewBag.CurrentSort ">@Resources.Equipment.Previous</a>
             </li>
         }
 
@@ -82,10 +81,10 @@
         @if (Model.Pager.CurrentPage < Model.Pager.TotalPages)
         {
             <li>
-                <a href="~/Equipment/Index?page=@(Model.Pager.CurrentPage + 1)&SearchString=@ViewBag.CurrentFilter&sortOrder=@ViewBag.CurrentSort ">Next</a>
+                <a href="~/Equipment/Index?page=@(Model.Pager.CurrentPage + 1)&SearchString=@ViewBag.CurrentFilter&sortOrder=@ViewBag.CurrentSort ">@Resources.Equipment.Next</a>
             </li>
             <li>
-                <a href="~/Equipment/Index?page=@(Model.Pager.TotalPages)&SearchString=@ViewBag.CurrentFilter&sortOrder=@ViewBag.CurrentSort ">Last</a>
+                <a href="~/Equipment/Index?page=@(Model.Pager.TotalPages)&SearchString=@ViewBag.CurrentFilter&sortOrder=@ViewBag.CurrentSort ">@Resources.Equipment.Last</a>
             </li>
         }
     </ul>

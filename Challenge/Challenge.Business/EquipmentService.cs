@@ -18,6 +18,10 @@ namespace Challenge.Business
         {
             return _unitOfWork.Equipments.Count();
         }
+        public int CountByName(string name)
+        {
+            return _unitOfWork.Equipments.CountByName(name);
+        }
         public void Add(EquipmentVO equipmentVO)
         {
             _unitOfWork.Equipments.Add(new Equipment

@@ -4,10 +4,9 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+    <h2>@Resources.Equipment.Details</h2>
 
 <div>
-    <h4>EquipmentModel</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -43,6 +42,6 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.SerialNumber }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink(@Resources.Equipment.Edit, "Edit", new { id = Model.SerialNumber }) |
+    @Html.ActionLink(@Resources.Equipment.BacktoList, "Index")
 </p>

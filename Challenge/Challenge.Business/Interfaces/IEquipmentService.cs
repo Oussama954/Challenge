@@ -12,6 +12,7 @@ namespace Challenge.Business.Interfaces
         void Update(EquipmentVO equipmentVO);
         void Delete(EquipmentVO equipmentVO);
         int Count();
+        int CountByName(string name);
         IEnumerable<EquipmentVO> OrderBySerialNumber(int page, int pageSize);
         IEnumerable<EquipmentVO> OrderByDescendingSerialNumber(int page, int pageSize);
         IEnumerable<EquipmentVO> FindName(string name, int page, int pageSize);

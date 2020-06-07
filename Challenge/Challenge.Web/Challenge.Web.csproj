@@ -159,6 +159,16 @@
     </Compile>
     <Compile Include="Models\IndexViewModel.cs" />
     <Compile Include="Models\Pager.cs" />
+    <Compile Include="Resources\Equipment.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Equipment.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Equipment.fr.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Equipment.fr.resx</DependentUpon>
+    </Compile>
     <Compile Include="Validation\CurrentDateAttribute.cs" />
     <Compile Include="Models\EquipmentModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -244,6 +254,18 @@
       <Project>{5D563D19-0881-42D1-8A07-760B9E58F70C}</Project>
       <Name>Challenge.VO</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Equipment.fr.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Equipment.fr.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Equipment.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Equipment.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
