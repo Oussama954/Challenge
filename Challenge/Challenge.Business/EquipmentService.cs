@@ -1,7 +1,10 @@
-﻿using Challenge.Business.Interfaces;
+﻿using Challenge.Business.Exceptions;
+using Challenge.Business.Interfaces;
 using Challenge.Model;
 using Challenge.VO;
 using System.Collections.Generic;
+using System.Data.Entity.Infrastructure;
+using System.Data.SqlClient;
 using System.Linq;
 
 namespace Challenge.Business
@@ -50,7 +53,20 @@ namespace Challenge.Business
                 SerialNumber = equipmentVO.SerialNumber,
                 Content = equipmentVO.Picture
             });
-            _unitOfWork.Complete();
+
+            try
+            {
+                _unitOfWork.Complete();
+
+            }
+            catch (DbUpdateException e)
+               when
+                     (e.InnerException?.InnerException is SqlException sqlEx
+                     && (sqlEx.Number == 2601 || sqlEx.Number == 2627))
+            {
+
+                throw new EquipmentExistException(equipmentVO.SerialNumber);
+            }        
         }
 
         /// <summary>

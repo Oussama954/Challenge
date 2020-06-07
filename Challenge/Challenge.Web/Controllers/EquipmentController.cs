@@ -1,9 +1,8 @@
 ﻿using Challenge.Business.Interfaces;
+using Challenge.Business.Exceptions;
 using Challenge.VO;
 using Challenge.Web.Models;
 using System;
-using System.Data.Entity.Infrastructure;
-using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -135,10 +134,8 @@ namespace Challenge.Web.Controllers
                     _equipmentService.Add(equipmentVO);
 
                 }
-                catch (DbUpdateException e)
-                when
-                      (e.InnerException?.InnerException is SqlException sqlEx
-                      && (sqlEx.Number == 2601 || sqlEx.Number == 2627))
+                catch (EquipmentExistException)
+
                 {
                     return RedirectToAction("Unique");
                 }
