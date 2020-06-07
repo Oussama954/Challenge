@@ -14,10 +14,11 @@ namespace Challenge.Tests.Repositories
     [TestClass]
     public class EquipmentRepositoryTest
     {
-        private IEquipmentRepository _repo;
-        private Mock<DbSet<Equipment>> _mockSet;
         private IEquipmentRepository _mockEquipmentRepository;
-        [TestInitialize()]
+        private Mock<DbSet<Equipment>> _mockSet;
+        private IEquipmentRepository _repo;
+
+        [TestInitialize]
         public void InitTest()
         {
             _mockSet = new Mock<DbSet<Equipment>>();
@@ -27,53 +28,57 @@ namespace Challenge.Tests.Repositories
             var equipments = new List<Equipment>
             {
                 new Equipment
-            {
-                SerialNumber = 1,
-                Name = "equipment1",
-                NextControlDate = new DateTime(2020,6,5),
-            },
+                {
+                    SerialNumber = 1,
+                    Name = "equipment1",
+                    NextControlDate = new DateTime(2020, 6, 5)
+                },
                 new Equipment
-            {
-                SerialNumber = 2,
-                Name = "equipment2",
-                NextControlDate = new DateTime(2020,6,6),
-            },
+                {
+                    SerialNumber = 2,
+                    Name = "equipment2",
+                    NextControlDate = new DateTime(2020, 6, 6)
+                },
                 new Equipment
-            {
-                SerialNumber = 3,
-                Name = "equipment3",
-                NextControlDate = new DateTime(2020,6,7),
-            }
+                {
+                    SerialNumber = 3,
+                    Name = "equipment3",
+                    NextControlDate = new DateTime(2020, 6, 7)
+                }
             };
             var mockEquipmentRepository = new Mock<IEquipmentRepository>();
             mockEquipmentRepository
                 .Setup(eq => eq.OrderBy(x => x.SerialNumber, 1, 2))
                 .Returns(
-                (Expression p, int a, int b) => equipments.OrderBy(x => x.SerialNumber).Skip(1).Take(2).ToList());
+                    (Expression p, int a, int b) => equipments.OrderBy(x => x.SerialNumber).Skip(1).Take(2).ToList());
             mockEquipmentRepository
-               .Setup(eq => eq.OrderBy(x => x.Name, 1, 2))
-               .Returns(
-               (Expression p, int a, int b) => equipments.OrderBy(x => x.Name).Skip(1).Take(2).ToList());
+                .Setup(eq => eq.OrderBy(x => x.Name, 1, 2))
+                .Returns(
+                    (Expression p, int a, int b) => equipments.OrderBy(x => x.Name).Skip(1).Take(2).ToList());
             mockEquipmentRepository
-               .Setup(eq => eq.OrderBy(x => x.NextControlDate, 1, 2))
-               .Returns(
-               (Expression p, int a, int b) => equipments.OrderBy(x => x.NextControlDate).Skip(1).Take(2).ToList());
+                .Setup(eq => eq.OrderBy(x => x.NextControlDate, 1, 2))
+                .Returns(
+                    (Expression p, int a, int b) =>
+                        equipments.OrderBy(x => x.NextControlDate).Skip(1).Take(2).ToList());
 
             mockEquipmentRepository
-                 .Setup(eq => eq.OrderByDescending(x => x.SerialNumber, 1, 2))
-                 .Returns(
-                 (Expression p, int a, int b) => equipments.OrderByDescending(x => x.SerialNumber).Skip(1).Take(2).ToList());
+                .Setup(eq => eq.OrderByDescending(x => x.SerialNumber, 1, 2))
+                .Returns(
+                    (Expression p, int a, int b) =>
+                        equipments.OrderByDescending(x => x.SerialNumber).Skip(1).Take(2).ToList());
             mockEquipmentRepository
-               .Setup(eq => eq.OrderByDescending(x => x.Name, 1, 2))
-               .Returns(
-               (Expression p, int a, int b) => equipments.OrderByDescending(x => x.Name).Skip(1).Take(2).ToList());
+                .Setup(eq => eq.OrderByDescending(x => x.Name, 1, 2))
+                .Returns(
+                    (Expression p, int a, int b) => equipments.OrderByDescending(x => x.Name).Skip(1).Take(2).ToList());
             mockEquipmentRepository
-               .Setup(eq => eq.OrderByDescending(x => x.NextControlDate, 1, 2))
-               .Returns(
-               (Expression p, int a, int b) => equipments.OrderByDescending(x => x.NextControlDate).Skip(1).Take(2).ToList());
+                .Setup(eq => eq.OrderByDescending(x => x.NextControlDate, 1, 2))
+                .Returns(
+                    (Expression p, int a, int b) =>
+                        equipments.OrderByDescending(x => x.NextControlDate).Skip(1).Take(2).ToList());
 
             _mockEquipmentRepository = mockEquipmentRepository.Object;
         }
+
         [TestMethod]
         public void TestAdd()
         {
@@ -81,7 +86,7 @@ namespace Challenge.Tests.Repositories
             {
                 SerialNumber = 1,
                 Name = "equipment1",
-                NextControlDate = new DateTime(),
+                NextControlDate = new DateTime()
             };
             _repo.Add(equipment);
             _mockSet.Verify(m => m.Add(It.IsAny<Equipment>()), Times.Once());
@@ -93,6 +98,7 @@ namespace Challenge.Tests.Repositories
             _repo.Get(1);
             _mockSet.Verify(m => m.Find(It.IsAny<object[]>()));
         }
+
         [TestMethod]
         public void TestRemove()
         {
@@ -100,11 +106,12 @@ namespace Challenge.Tests.Repositories
             {
                 SerialNumber = 1,
                 Name = "equipment1",
-                NextControlDate = new DateTime(),
+                NextControlDate = new DateTime()
             };
             _repo.Remove(equipment);
             _mockSet.Verify(m => m.Remove(It.IsAny<Equipment>()), Times.Once());
         }
+
         [TestMethod]
         public void TestOrderBy_int()
         {
@@ -114,6 +121,7 @@ namespace Challenge.Tests.Repositories
             Assert.AreEqual(2, ordredList.First().SerialNumber); // Verify it is the right 
             Assert.AreEqual(3, ordredList.Last().SerialNumber); // Verify it is the right 
         }
+
         [TestMethod]
         public void TestOrderBy_string()
         {
@@ -123,6 +131,7 @@ namespace Challenge.Tests.Repositories
             Assert.AreEqual("equipment2", ordredList.First().Name); // Verify it is the right 
             Assert.AreEqual("equipment3", ordredList.Last().Name); // Verify it is the right 
         }
+
         [TestMethod]
         public void TestOrderBy_date()
         {
@@ -142,6 +151,7 @@ namespace Challenge.Tests.Repositories
             Assert.AreEqual(2, ordredList.First().SerialNumber); // Verify it is the right 
             Assert.AreEqual(1, ordredList.Last().SerialNumber); // Verify it is the right 
         }
+
         [TestMethod]
         public void TestOrderByDescending_string()
         {
@@ -151,6 +161,7 @@ namespace Challenge.Tests.Repositories
             Assert.AreEqual("equipment2", ordredList.First().Name); // Verify it is the right 
             Assert.AreEqual("equipment1", ordredList.Last().Name); // Verify it is the right 
         }
+
         [TestMethod]
         public void TestOrderByDescending_date()
         {
@@ -160,6 +171,5 @@ namespace Challenge.Tests.Repositories
             Assert.AreEqual(new DateTime(2020, 6, 6), ordredList.First().NextControlDate); // Verify it is the right 
             Assert.AreEqual(new DateTime(2020, 6, 5), ordredList.Last().NextControlDate); // Verify it is the
         }
-
     }
 }

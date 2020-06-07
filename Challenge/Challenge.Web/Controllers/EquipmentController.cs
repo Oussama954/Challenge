@@ -1,32 +1,34 @@
-﻿using Challenge.Business.Interfaces;
-using Challenge.Business.Exceptions;
-using Challenge.VO;
-using Challenge.Web.Models;
-using System;
+﻿using System;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
+using Challenge.Business.Exceptions;
+using Challenge.Business.Interfaces;
+using Challenge.VO;
+using Challenge.Web.Models;
 
 namespace Challenge.Web.Controllers
 {
     /// <summary>
-    /// Equipment Controller
+    ///     Equipment Controller
     /// </summary>
     public class EquipmentController : Controller
     {
         private readonly IEquipmentService _equipmentService;
+
         public EquipmentController(IEquipmentService equipmentService)
         {
             _equipmentService = equipmentService;
         }
+
         // GET: Equipment
         public ActionResult Index(string sortOrder, int? page, string searchString, string currentFilter)
         {
             // The pager need the cout of all equipment to calculate pages size and page number
             var pager = new Pager(_equipmentService.Count(), page);
-            int pageSize = (pager.CurrentPage - 1) * pager.PageSize;
-            int pageNumber = pager.PageSize;
+            var pageSize = (pager.CurrentPage - 1) * pager.PageSize;
+            var pageNumber = pager.PageSize;
 
             ViewBag.CurrentFilter = searchString;
             ViewBag.CurrentSort = sortOrder;
@@ -36,16 +38,15 @@ namespace Challenge.Web.Controllers
 
             var equipmentList = _equipmentService.OrderBySerialNumber(pageSize, pageNumber);
 
-            if (searchString == null)
-            {
-                searchString = currentFilter;
-            }
+            if (searchString == null) searchString = currentFilter;
             if (!string.IsNullOrEmpty(searchString))
             {
                 // Need to intialize the pager with the count of searched equipment
                 pager = new Pager(_equipmentService.CountByName(searchString), page);
-                equipmentList = _equipmentService.FindName(searchString, (pager.CurrentPage - 1) * pager.PageSize, pager.PageSize);
+                equipmentList = _equipmentService.FindName(searchString, (pager.CurrentPage - 1) * pager.PageSize,
+                    pager.PageSize);
             }
+
             switch (sortOrder)
             {
                 case "serial_desc":
@@ -64,6 +65,7 @@ namespace Challenge.Web.Controllers
                     equipmentList = _equipmentService.OrderByDescendingDate(pageSize, pageNumber);
                     break;
             }
+
             var viewModel = new IndexViewModel
             {
                 Items = equipmentList.Select(e => new EquipmentModel
@@ -71,7 +73,9 @@ namespace Challenge.Web.Controllers
                     Name = e.Name,
                     NextControlDate = e.NextControlDate,
                     SerialNumber = e.SerialNumber,
-                    PictureUrl = e.Picture.Count() != 0 ? string.Format("data:image/png;base64,{0}", Convert.ToBase64String(e.Picture)): null
+                    PictureUrl = e.Picture.Count() != 0
+                        ? string.Format("data:image/png;base64,{0}", Convert.ToBase64String(e.Picture))
+                        : null
                 }),
                 Pager = pager
             };
@@ -82,22 +86,18 @@ namespace Challenge.Web.Controllers
         // GET: Equipment/Details/5
         public ActionResult Details(int id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+            if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             var equipmentVO = _equipmentService.Find(id);
             var equipmentModel = new EquipmentModel
             {
                 Name = equipmentVO.Name,
                 NextControlDate = equipmentVO.NextControlDate,
-                PictureUrl = equipmentVO.Picture.Count() != 0 ? string.Format("data:image/png;base64,{0}", Convert.ToBase64String(equipmentVO.Picture)) : null,
+                PictureUrl = equipmentVO.Picture.Count() != 0
+                    ? string.Format("data:image/png;base64,{0}", Convert.ToBase64String(equipmentVO.Picture))
+                    : null,
                 SerialNumber = equipmentVO.SerialNumber
             };
-            if (equipmentVO == null)
-            {
-                return HttpNotFound();
-            }
+            if (equipmentVO == null) return HttpNotFound();
             return View(equipmentModel);
         }
 
@@ -110,7 +110,8 @@ namespace Challenge.Web.Controllers
         // POST: Equipment/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "SerialNumber,Name,Picture,NextControlDate")] EquipmentModel EquipmentModel)
+        public ActionResult Create([Bind(Include = "SerialNumber,Name,Picture,NextControlDate")]
+            EquipmentModel EquipmentModel)
         {
             if (ModelState.IsValid)
             {
@@ -132,7 +133,6 @@ namespace Challenge.Web.Controllers
                 try
                 {
                     _equipmentService.Add(equipmentVO);
-
                 }
                 catch (EquipmentExistException)
 
@@ -142,16 +142,14 @@ namespace Challenge.Web.Controllers
 
                 return RedirectToAction("Index");
             }
+
             return View(EquipmentModel);
         }
 
         // GET: Equipment/Edit/5
         public ActionResult Edit(int id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+            if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             var equipmentVO = _equipmentService.Find(id);
             var equipmentModel = new EquipmentModel
             {
@@ -160,17 +158,15 @@ namespace Challenge.Web.Controllers
                 Picture = null,
                 SerialNumber = equipmentVO.SerialNumber
             };
-            if (equipmentVO == null)
-            {
-                return HttpNotFound();
-            }
+            if (equipmentVO == null) return HttpNotFound();
             return View(equipmentModel);
         }
 
         // POST: Equipment/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "SerialNumber,Name,Picture,NextControlDate")] EquipmentModel EquipmentModel)
+        public ActionResult Edit([Bind(Include = "SerialNumber,Name,Picture,NextControlDate")]
+            EquipmentModel EquipmentModel)
         {
             if (ModelState.IsValid)
             {
@@ -181,6 +177,7 @@ namespace Challenge.Web.Controllers
                     EquipmentModel.Picture.InputStream.CopyTo(target);
                     picture = target.ToArray();
                 }
+
                 var equipmentVO = new EquipmentVO
                 {
                     Name = EquipmentModel.Name,
@@ -191,33 +188,31 @@ namespace Challenge.Web.Controllers
                 _equipmentService.Update(equipmentVO);
                 return RedirectToAction("Index");
             }
+
             return View(EquipmentModel);
         }
 
         // GET: Equipment/Delete/5
         public ActionResult Delete(int id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+            if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             var equipmentVO = _equipmentService.Find(id);
             var equipmentModel = new EquipmentModel
             {
                 Name = equipmentVO.Name,
                 NextControlDate = equipmentVO.NextControlDate,
-                PictureUrl = equipmentVO.Picture.Count() != 0 ? string.Format("data:image/png;base64,{0}", Convert.ToBase64String(equipmentVO.Picture)) : null,
+                PictureUrl = equipmentVO.Picture.Count() != 0
+                    ? string.Format("data:image/png;base64,{0}", Convert.ToBase64String(equipmentVO.Picture))
+                    : null,
                 SerialNumber = equipmentVO.SerialNumber
             };
-            if (equipmentVO == null)
-            {
-                return HttpNotFound();
-            }
+            if (equipmentVO == null) return HttpNotFound();
             return View(equipmentModel);
         }
 
         // POST: Equipment/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
+        [ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
@@ -225,10 +220,12 @@ namespace Challenge.Web.Controllers
             _equipmentService.Delete(equipmentVO);
             return RedirectToAction("Index");
         }
+
         public ActionResult Unique()
         {
             return View();
         }
+
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);

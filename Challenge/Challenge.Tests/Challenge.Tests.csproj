@@ -109,6 +109,7 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\EquipmentRepositoryTest.cs" />
+    <Compile Include="Services\EquipmentServiceTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App.config" />
@@ -117,6 +118,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Challenge.Business\Challenge.Business.csproj">
+      <Project>{0DA45831-DD0C-40F1-B36F-59D89E2F4390}</Project>
+      <Name>Challenge.Business</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Challenge.Dal\Challenge.Dal.csproj">
       <Project>{C0934FDC-1BA3-4407-A385-887D3E1B9D18}</Project>
       <Name>Challenge.Dal</Name>

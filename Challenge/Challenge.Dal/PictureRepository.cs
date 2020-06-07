@@ -4,7 +4,7 @@ using Challenge.Model;
 namespace Challenge.Dal
 {
     /// <summary>
-    /// Picture Repository Class
+    ///     Picture Repository Class
     /// </summary>
     public class PictureRepository : Repository<Picture>, IPictureRepository
     {

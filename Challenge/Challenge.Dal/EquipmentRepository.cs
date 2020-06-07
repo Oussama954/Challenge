@@ -1,30 +1,31 @@
-﻿using Challenge.Dal.Interfaces;
-using Challenge.Model;
-using System.Collections.Generic;
-using System.Data.Entity;
+﻿using System.Collections.Generic;
 using System.Linq;
+using Challenge.Dal.Interfaces;
+using Challenge.Model;
 
 namespace Challenge.Dal
 {
     /// <summary>
-    /// Equipment Repository Class
+    ///     Equipment Repository Class
     /// </summary>
     public class EquipmentRepository : Repository<Equipment>, IEquipmentRepository
     {
         public EquipmentRepository(ChallengeContext context) : base(context)
         {
         }
+
         /// <summary>
-        /// Count the number of equipment with given name
+        ///     Count the number of equipment with given name
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
         public int CountByName(string name)
         {
-            return Context.Set<Equipment>().Where(e => e.Name == name).Count();
+            return Context.Set<Equipment>().Count(e => e.Name == name);
         }
+
         /// <summary>
-        /// Find the equipments with given name with pagination
+        ///     Find the equipments with given name with pagination
         /// </summary>
         /// <param name="name"></param>
         /// <param name="page"></param>
@@ -33,10 +34,10 @@ namespace Challenge.Dal
         public IEnumerable<Equipment> FindByName(string name, int page, int pageSize)
         {
             return Context.Set<Equipment>().Where(e => name == e.Name)
-                                           .OrderByDescending(e => e.Name)
-                                           .Skip(page)
-                                           .Take(pageSize)
-                                           .ToList();
+                .OrderByDescending(e => e.Name)
+                .Skip(page)
+                .Take(pageSize)
+                .ToList();
         }
     }
 }

@@ -6,11 +6,10 @@ namespace Challenge.Business.Exceptions
     {
         public EquipmentExistException()
         {
-
         }
-        public EquipmentExistException(int id) : base(string.Format("Equipment Already Exist: {0}", id))
-        {
 
+        public EquipmentExistException(int id) : base($"Equipment Already Exist: {id}")
+        {
         }
     }
 }
