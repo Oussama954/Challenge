@@ -28,7 +28,7 @@
             @Html.ActionLink(@Resources.Equipment.ControleDate, "Index", new { sortOrder = ViewBag.NextControlDateSortParm, currentFilter = ViewBag.CurrentFilter })
         </th>
         <th>
-            @Resources.Equipment.Picture
+            @Html.ActionLink(@Resources.Equipment.Picture, "Index", new { currentFilter = ViewBag.CurrentFilter })
         </th>
         <th></th>
     </tr>
@@ -46,7 +46,10 @@
                 @Html.DisplayFor(modelItem => item.NextControlDate)
             </td>
             <td>
-                <img src="@Html.DisplayFor(modelItem => item.PictureUrl)" width="96" height="65">
+                @if (@item.PictureUrl != null)
+                {
+                    <img src="@Html.DisplayFor(modelItem => item.PictureUrl)" width="96" height="65">
+                }
             </td>
             <td>
                 @Html.ActionLink(@Resources.Equipment.Edit, "Edit", new { id = item.SerialNumber }) |

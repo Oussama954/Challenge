@@ -36,7 +36,10 @@
         </dt>
 
         <dd>
-            <img src="@Html.DisplayFor(model => model.PictureUrl)" width="96" height="65">
+            @if (Model.PictureUrl != null)
+            {
+                <img src="@Html.DisplayFor(model => model.PictureUrl)" width="96" height="65">
+            }
         </dd>
     </dl>
 

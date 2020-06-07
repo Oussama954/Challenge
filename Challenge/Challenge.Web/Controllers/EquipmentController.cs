@@ -71,7 +71,7 @@ namespace Challenge.Web.Controllers
                     Name = e.Name,
                     NextControlDate = e.NextControlDate,
                     SerialNumber = e.SerialNumber,
-                    PictureUrl = string.Format("data:image/png;base64,{0}", Convert.ToBase64String(e.Picture))
+                    PictureUrl = e.Picture.Count() != 0 ? string.Format("data:image/png;base64,{0}", Convert.ToBase64String(e.Picture)): null
                 }),
                 Pager = pager
             };
@@ -91,7 +91,7 @@ namespace Challenge.Web.Controllers
             {
                 Name = equipmentVO.Name,
                 NextControlDate = equipmentVO.NextControlDate,
-                PictureUrl = string.Format("data:image/png;base64,{0}", Convert.ToBase64String(equipmentVO.Picture)),
+                PictureUrl = equipmentVO.Picture.Count() != 0 ? string.Format("data:image/png;base64,{0}", Convert.ToBase64String(equipmentVO.Picture)) : null,
                 SerialNumber = equipmentVO.SerialNumber
             };
             if (equipmentVO == null)
@@ -206,7 +206,7 @@ namespace Challenge.Web.Controllers
             {
                 Name = equipmentVO.Name,
                 NextControlDate = equipmentVO.NextControlDate,
-                PictureUrl = string.Format("data:image/png;base64,{0}", Convert.ToBase64String(equipmentVO.Picture)),
+                PictureUrl = equipmentVO.Picture.Count() != 0 ? string.Format("data:image/png;base64,{0}", Convert.ToBase64String(equipmentVO.Picture)) : null,
                 SerialNumber = equipmentVO.SerialNumber
             };
             if (equipmentVO == null)
