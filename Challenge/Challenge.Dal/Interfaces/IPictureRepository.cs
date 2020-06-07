@@ -1,12 +1,10 @@
 ﻿using Challenge.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Challenge.Dal.Interfaces
 {
+    /// <summary>
+    /// Picture repository interface
+    /// </summary>
     public interface IPictureRepository : IRepository<Picture>
     {
     }

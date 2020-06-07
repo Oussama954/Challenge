@@ -4,6 +4,9 @@ using System.Collections.Generic;
 
 namespace Challenge.Business.Interfaces
 {
+    /// <summary>
+    /// Equipment Interface
+    /// </summary>
     public interface IEquipmentService
     {
         IEnumerable<EquipmentVO> GetAll();

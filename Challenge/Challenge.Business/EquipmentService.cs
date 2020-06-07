@@ -1,12 +1,14 @@
 ﻿using Challenge.Business.Interfaces;
 using Challenge.Model;
 using Challenge.VO;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Challenge.Business
 {
+    /// <summary>
+    /// Equipment Service Class
+    /// </summary>
     public class EquipmentService : IEquipmentService
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -14,14 +16,27 @@ namespace Challenge.Business
         {
             _unitOfWork = unitOfWork;
         }
+        /// <summary>
+        /// Return the number of equipments
+        /// </summary>
+        /// <returns></returns>
         public int Count()
         {
             return _unitOfWork.Equipments.Count();
         }
+        /// <summary>
+        /// Retrun the number of equipment with given name
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
         public int CountByName(string name)
         {
             return _unitOfWork.Equipments.CountByName(name);
         }
+        /// <summary>
+        /// Store an equipment
+        /// </summary>
+        /// <param name="equipmentVO"></param>
         public void Add(EquipmentVO equipmentVO)
         {
             _unitOfWork.Equipments.Add(new Equipment
@@ -38,6 +53,10 @@ namespace Challenge.Business
             _unitOfWork.Complete();
         }
 
+        /// <summary>
+        /// Delete an equipment
+        /// </summary>
+        /// <param name="equipmentVO"></param>
         public void Delete(EquipmentVO equipmentVO)
         {
             var serialNumber = equipmentVO.SerialNumber;
@@ -47,7 +66,11 @@ namespace Challenge.Business
             _unitOfWork.Pictures.Remove(picture);
             _unitOfWork.Complete();
         }
-
+        /// <summary>
+        /// Find an equipment with given id 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public EquipmentVO Find(int id)
         {
             var equipment = _unitOfWork.Equipments.Get(id);
@@ -59,6 +82,10 @@ namespace Challenge.Business
                 Picture = equipment.Picture.Content
             };
         }
+        /// <summary>
+        /// Update an equipment
+        /// </summary>
+        /// <param name="equipmentVO"></param>
         public void Update(EquipmentVO equipmentVO)
         {
             var equipment = _unitOfWork.Equipments.Get(equipmentVO.SerialNumber);
@@ -69,6 +96,10 @@ namespace Challenge.Business
             _unitOfWork.Complete();
         }
 
+        /// <summary>
+        /// Retun all stored equipment
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<EquipmentVO> GetAll()
         {
             return _unitOfWork.Equipments.GetAll().Select(e => new EquipmentVO
@@ -79,6 +110,12 @@ namespace Challenge.Business
                 Picture = e.Picture.Content
             });
         }
+        /// <summary>
+        /// Return all equipment sorted by serial number
+        /// </summary>
+        /// <param name="page"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
         public IEnumerable<EquipmentVO> OrderBySerialNumber(int page, int pageSize)
         {
             return _unitOfWork.Equipments.OrderBy(e => e.SerialNumber, page, pageSize).Select(e => new EquipmentVO
@@ -89,6 +126,12 @@ namespace Challenge.Business
                 Picture = e.Picture.Content
             });
         }
+        /// <summary>
+        /// Return all equipment sorted by serial number descending
+        /// </summary>
+        /// <param name="page"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
         public IEnumerable<EquipmentVO> OrderByDescendingSerialNumber(int page, int pageSize)
         {
             return _unitOfWork.Equipments.OrderByDescending(e => e.SerialNumber, page, pageSize).Select(e => new EquipmentVO
@@ -99,7 +142,13 @@ namespace Challenge.Business
                 Picture = e.Picture.Content
             });
         }
-
+        /// <summary>
+        /// Find all equipment with given name
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="page"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
         public IEnumerable<EquipmentVO> FindName(string name, int page, int pageSize)
         {
             return _unitOfWork.Equipments.FindByName(name, page, pageSize).Select(e => new EquipmentVO
@@ -110,7 +159,12 @@ namespace Challenge.Business
                 Picture = e.Picture.Content
             });
         }
-
+        /// <summary>
+        /// Order Equipments by name
+        /// </summary>
+        /// <param name="pageSize"></param>
+        /// <param name="pageNumber"></param>
+        /// <returns></returns>
         public IEnumerable<EquipmentVO> OrderByName(int pageSize, int pageNumber)
         {
             return _unitOfWork.Equipments.OrderBy(e => e.Name, pageSize, pageNumber).Select(e => new EquipmentVO
@@ -121,7 +175,12 @@ namespace Challenge.Business
                 Picture = e.Picture.Content
             });
         }
-
+        /// <summary>
+        /// Order Equipments by name descending
+        /// </summary>
+        /// <param name="pageSize"></param>
+        /// <param name="pageNumber"></param>
+        /// <returns></returns>
         public IEnumerable<EquipmentVO> OrderByDescendingName(int pageSize, int pageNumber)
         {
             return _unitOfWork.Equipments.OrderByDescending(e => e.Name, pageSize, pageNumber).Select(e => new EquipmentVO
@@ -132,7 +191,12 @@ namespace Challenge.Business
                 Picture = e.Picture.Content
             });
         }
-
+        /// <summary>
+        /// Order Equipments by next controle date 
+        /// </summary>
+        /// <param name="pageSize"></param>
+        /// <param name="pageNumber"></param>
+        /// <returns></returns>
         public IEnumerable<EquipmentVO> OrderByDate(int pageSize, int pageNumber)
         {
             return _unitOfWork.Equipments.OrderBy(e => e.NextControlDate, pageSize, pageNumber).Select(e => new EquipmentVO
@@ -143,7 +207,12 @@ namespace Challenge.Business
                 Picture = e.Picture.Content
             });
         }
-
+        /// <summary>
+        /// Order Equipments by next controle date descending
+        /// </summary>
+        /// <param name="pageSize"></param>
+        /// <param name="pageNumber"></param>
+        /// <returns></returns>
         public IEnumerable<EquipmentVO> OrderByDescendingDate(int pageSize, int pageNumber)
         {
             return _unitOfWork.Equipments.OrderByDescending(e => e.NextControlDate, pageSize, pageNumber).Select(e => new EquipmentVO

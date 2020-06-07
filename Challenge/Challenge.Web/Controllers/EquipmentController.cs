@@ -11,6 +11,9 @@ using System.Web.Mvc;
 
 namespace Challenge.Web.Controllers
 {
+    /// <summary>
+    /// Equipment Controller
+    /// </summary>
     public class EquipmentController : Controller
     {
         private readonly IEquipmentService _equipmentService;
@@ -19,8 +22,9 @@ namespace Challenge.Web.Controllers
             _equipmentService = equipmentService;
         }
         // GET: Equipment
-        public ActionResult Index(string sortOrder, int? page, string searchString,string currentFilter) 
+        public ActionResult Index(string sortOrder, int? page, string searchString, string currentFilter)
         {
+            // The pager need the cout of all equipment to calculate pages size and page number
             var pager = new Pager(_equipmentService.Count(), page);
             int pageSize = (pager.CurrentPage - 1) * pager.PageSize;
             int pageNumber = pager.PageSize;
@@ -39,8 +43,9 @@ namespace Challenge.Web.Controllers
             }
             if (!string.IsNullOrEmpty(searchString))
             {
+                // Need to intialize the pager with the count of searched equipment
                 pager = new Pager(_equipmentService.CountByName(searchString), page);
-                equipmentList = _equipmentService.FindName(searchString, (pager.CurrentPage - 1) * pager.PageSize,  pager.PageSize);
+                equipmentList = _equipmentService.FindName(searchString, (pager.CurrentPage - 1) * pager.PageSize, pager.PageSize);
             }
             switch (sortOrder)
             {
@@ -104,8 +109,6 @@ namespace Challenge.Web.Controllers
         }
 
         // POST: Equipment/Create
-        // Pour vous protéger des attaques par survalidation, activez les propriétés spécifiques auxquelles vous souhaitez vous lier. Pour 
-        // plus de détails, consultez https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "SerialNumber,Name,Picture,NextControlDate")] EquipmentModel EquipmentModel)
@@ -113,7 +116,7 @@ namespace Challenge.Web.Controllers
             if (ModelState.IsValid)
             {
                 var picture = new byte[0];
-                if(EquipmentModel.Picture != null)
+                if (EquipmentModel.Picture != null)
                 {
                     var target = new MemoryStream();
                     EquipmentModel.Picture.InputStream.CopyTo(target);
@@ -168,8 +171,6 @@ namespace Challenge.Web.Controllers
         }
 
         // POST: Equipment/Edit/5
-        // Pour vous protéger des attaques par survalidation, activez les propriétés spécifiques auxquelles vous souhaitez vous lier. Pour 
-        // plus de détails, consultez https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "SerialNumber,Name,Picture,NextControlDate")] EquipmentModel EquipmentModel)

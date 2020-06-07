@@ -5,13 +5,14 @@ using Challenge.Model;
 
 namespace Challenge.Business
 {
+    /// <summary>
+    /// Unit of work Class
+    /// </summary>
     public class UnitOfWork : IUnitOfWork
     {
         private readonly ChallengeContext _context;
         public IEquipmentRepository Equipments { get; private set; }
-
         public IPictureRepository Pictures { get; private set; }
-
         public UnitOfWork(ChallengeContext context)
         {
             _context = context;
@@ -22,7 +23,6 @@ namespace Challenge.Business
         {
            return _context.SaveChanges();
         }
-
         public void Dispose()
         {
             _context.Dispose();
