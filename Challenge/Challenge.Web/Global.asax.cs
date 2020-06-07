@@ -1,3 +1,4 @@
+using Challenge.Web.Filters;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -18,6 +19,8 @@ namespace Challenge.Web
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+            GlobalFilters.Filters.Add(new ExceptionHandler());
+
         }
         protected void Application_AcquireRequestState(object sender, EventArgs e)
         {

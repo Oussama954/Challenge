@@ -150,6 +150,9 @@
   <data name="EquipmentList" xml:space="preserve">
     <value>Liste de matériels</value>
   </data>
+  <data name="Error" xml:space="preserve">
+    <value>Une erreur s'est produite lors du traitement de votre demande.</value>
+  </data>
   <data name="FindByName" xml:space="preserve">
     <value>Rechercher par nom</value>
   </data>
