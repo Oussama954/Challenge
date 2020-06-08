@@ -130,6 +130,10 @@
       <Project>{375C6169-70DA-4F07-8A77-0D54ACC1AA2B}</Project>
       <Name>Challenge.Model</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Challenge.VO\Challenge.VO.csproj">
+      <Project>{5D563D19-0881-42D1-8A07-760B9E58F70C}</Project>
+      <Name>Challenge.VO</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Challenge.Web\Challenge.Web.csproj">
       <Project>{8EB8F318-CBFC-4861-B6C7-F693F609093E}</Project>
       <Name>Challenge.Web</Name>
